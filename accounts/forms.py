@@ -7,5 +7,5 @@ class CustomeAuthenticationForm(form_auth.AuthenticationForm):
 
 class CustomeCreateFrom(form_auth.UserCreationForm):
     class Meta:
-        model = models.CustomeUser
+        model = models.CustomUser
         fields = ('phone_number',)
