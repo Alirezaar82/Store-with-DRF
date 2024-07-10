@@ -70,7 +70,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField('CustomeUser', on_delete=models.CASCADE,related_name="user_profile")
+    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE,related_name="user_profile")
     email = models.EmailField(blank=True,null=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -85,7 +85,7 @@ class Profile(models.Model):
         return _('new user')
 
 class UserAddressModel(models.Model):
-    user = models.ForeignKey(CustomeUser,on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     name = models.CharField(max_length=255,default='ادرس من')
     
     address = models.CharField(max_length=250)
@@ -96,7 +96,7 @@ class UserAddressModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 
-@receiver(post_save,sender=CustomeUser)
+@receiver(post_save,sender=CustomUser)
 def create_profile(sender,instance,created,**kwargs):
     if created:
         Profile.objects.create(user=instance, pk=instance.pk)
