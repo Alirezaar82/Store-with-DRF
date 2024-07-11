@@ -51,6 +51,7 @@ class UserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     phone_number = models.CharField(_('Phone Number'),max_length=15, validators=[validate_iranian_cellphone_number],unique=True)
+    email = models.EmailField(_("Email"), max_length=254,unique=True,blank=True,null=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
