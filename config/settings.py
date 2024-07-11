@@ -153,30 +153,30 @@ INTERNAL_IPS = [
 ]
 
 # setting for rest framework
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ),
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 
-#     # 'DEFAULT_PERMISSION_CLASSES' : [
-#     #     'rest_framework.permissions.ISAuthenticated',
+    # 'DEFAULT_PERMISSION_CLASSES' : [
+    #     'rest_framework.permissions.ISAuthenticated',
 
 
-#     # ]
+    # ]
 
-# }
+}
 
-# SIMPLE_JWT = {
-#     'AUTH_HEADER_TYPES':('JWT',),
-#     'ACCESS_TOKEN_LIFETIME':timedelta(hours=5),
-#     'REFRESH_TOKEN_LIFETIME':timedelta(days=1)
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES':('JWT',),
+    'ACCESS_TOKEN_LIFETIME':timedelta(hours=5),
+    'REFRESH_TOKEN_LIFETIME':timedelta(weeks=5)
 
-# }
+}
 
-# DJOSER = {
-#     'SERIALIZERS': {
-#     'user_create': 'core.serializers.UserCreateSerializer',
-#     'current_user': 'core.serializers.UserSerializer',
+DJOSER = {
+    'SERIALIZERS': {
+    'user_create': 'accounts.serializers.UserCreateSerializer',
+    'current_user': 'accounts.serializers.UserSerializer',
 
-#     }
-# }
+    }
+}
