@@ -19,7 +19,7 @@ class ProductStatusType(models.IntegerChoices):
 class ProductModel(models.Model):
     title = models.CharField(verbose_name=_('title'),max_length=255)
     slug = models.SlugField(verbose_name=_('slug'),max_length=255, blank=True,unique=True,allow_unicode=True)
-    category = models.ForeignKey(CategoryModel,on_delete=models.CASCADE,verbose_name=_('category'),)
+    category = models.ForeignKey(CategoryModel,on_delete=models.DO_NOTHING,verbose_name=_('category'),related_name='product_category')
     description = models.TextField(verbose_name=_('description'))
     image = models.ImageField(verbose_name=_('image'),upload_to='shop/',default='shop/default.jpg/')
     
