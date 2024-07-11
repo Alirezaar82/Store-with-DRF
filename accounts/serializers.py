@@ -3,12 +3,12 @@ from djoser.serializers import UserCreateSerializer as DjoserUserCreateSerialize
 
 
 class UserSerializer(DjoserUserSerializer):
-    class Meta(DjoserUserSerializer):
-        fields = ['id','phone_number','email']
+    class Meta(DjoserUserSerializer.Meta):
+        fields = ['id','phone_number']
 
 
 class UserCreateSerializer(DjoserUserCreateSerializer):
-    class Meta(DjoserUserCreateSerializer):
+    class Meta(DjoserUserCreateSerializer.Meta):
         fields = ['id','phone_number','password','email']
 
 

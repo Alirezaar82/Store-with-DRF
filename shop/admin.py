@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CategoryModel,ProductModel
+from .models import CategoryModel, CommentModel,ProductModel
 
 
 @admin.register(CategoryModel)
@@ -20,3 +20,7 @@ class ProductModelAdmin(admin.ModelAdmin):
         'price',
         'created_at',
     ]
+
+@admin.register(CommentModel)
+class CommentModelAdmin(admin.ModelAdmin):
+    pass

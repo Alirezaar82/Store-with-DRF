@@ -7,11 +7,11 @@ from rest_framework import status
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import ProductModel,ProductStatusType,CategoryModel 
-from .serializers import ProductSerializer , CategorySerializer
+from .models import CommentModel, CommentStatusType, ProductModel,ProductStatusType,CategoryModel 
+from .serializers import CommentSerializer, ProductSerializer , CategorySerializer
 from .filters import *
 from .pagination import CustomProductPagination
-from .permissions import IsAdminOrReadOnlyPermission
+from .permissions import IsAdminOrReadOnlyOrCreatePermission, IsAdminOrReadOnlyPermission
 
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
@@ -44,3 +44,22 @@ class CategoryViewSet(ModelViewSet):
     
     #     product.delete()
     #     return Response(_('category has delete'),status=status.HTTP_200_OK)
+
+
+class CommentViewSet(ModelViewSet):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAdminOrReadOnlyOrCreatePermission]
+
+    def get_queryset(self):
+        product_pk = self.kwargs['product_pk']
+        if self.request.user.is_authenticated and self.request.user.is_staff:
+            queryset = CommentModel.objects.filter(product_id=product_pk).all()
+        else :
+            queryset = CommentModel.objects.filter(product_id=product_pk,status=CommentStatusType.approved.value).all()
+        return queryset
+    
+    def get_serializer_context(self):
+        context =  super().get_serializer_context()
+        context['product_pk'] = self.kwargs['product_pk']
+        return context
+    

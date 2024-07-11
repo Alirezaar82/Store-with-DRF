@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext as _
+from django.contrib.auth import get_user_model
+
+USER = get_user_model()
 
 
 class CategoryModel(models.Model):
@@ -32,3 +35,40 @@ class ProductModel(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def get_status(self):
+        return {
+            "id":self.status,
+            "title":ProductStatusType(self.status).name,
+            "label":ProductStatusType(self.status).label,
+        }
+    
+class CommentStatusType(models.IntegerChoices):
+    waiting = 1,_('Waiting')
+    approved = 2,_('Approved')
+    notapproved = 3,_('Not Approved')
+
+
+
+
+
+class CommentModel(models.Model):
+    customer = models.ForeignKey(USER,on_delete=models.CASCADE,verbose_name=_('comment_customer'))
+    product = models.ForeignKey(ProductModel, on_delete=models.CASCADE,verbose_name=_('comment_product'))
+    
+    title = models.CharField(max_length=255,verbose_name=_('title'))
+    body = models.TextField(verbose_name=_('body'))
+
+    status = models.IntegerField(verbose_name=_('status'),choices=CommentStatusType.choices,default=CommentStatusType.waiting.value)
+
+    created_at = models.DateTimeField(verbose_name=_('created'),auto_now_add=True)
+    
+    def __str__(self):
+        return _(f'title: {self.title}\v customer: {self.customer.user_profile.get_fullname()}')
+    
+    def get_status(self):
+        return {
+            "id":self.status,
+            "title":CommentStatusType(self.status).name,
+            "label":CommentStatusType(self.status).label,
+        }
