@@ -21,11 +21,11 @@ class ProductModel(models.Model):
     slug = models.SlugField(verbose_name=_('slug'),max_length=255, blank=True,unique=True,allow_unicode=True)
     category = models.ForeignKey(CategoryModel,on_delete=models.CASCADE,verbose_name=_('category'),)
     description = models.TextField(verbose_name=_('description'))
-    image = models.ImageField(verbose_name=_('image'),upload_to='shop/',default='shop/default.png/')
+    image = models.ImageField(verbose_name=_('image'),upload_to='shop/',default='shop/default.jpg/')
     
     price = models.DecimalField(verbose_name=_('price'),max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(verbose_name=_('stock'),)
-    status = models.IntegerField(verbose_name=_('status'),choices=ProductStatusType.choices, default=ProductStatusType.draft.value)
+    status = models.IntegerField(verbose_name=_('status'),choices=ProductStatusType.choices, default=ProductStatusType.published.value)
     
     created_at = models.DateTimeField(verbose_name=_('created'),auto_now_add=True)
     update_at = models.DateTimeField(verbose_name=_('update'),auto_now=True)
