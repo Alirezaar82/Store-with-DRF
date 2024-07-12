@@ -64,7 +64,7 @@ class CommentModel(models.Model):
     created_at = models.DateTimeField(verbose_name=_('created'),auto_now_add=True)
     
     def __str__(self):
-        return _(f'title: {self.title}\v customer: {self.customer.user_profile.get_fullname()}')
+        return _(f'title: {self.title} - customer:{self.customer.user_profile.get_fullname()} - product:{self.product.title}')
     
     def get_status(self):
         return {
@@ -72,3 +72,13 @@ class CommentModel(models.Model):
             "title":CommentStatusType(self.status).name,
             "label":CommentStatusType(self.status).label,
         }
+    
+class WishListModel(models.Model):
+    customer = models.ForeignKey(USER,on_delete=models.CASCADE,verbose_name=_("wishlist_Customer"))
+    product = models.ForeignKey(ProductModel, on_delete=models.CASCADE, verbose_name=_("wishlist_Product"))
+    
+    created_at = models.DateTimeField(verbose_name=_("created"),auto_now_add=True)
+
+    def __str__(self):
+        return _(f'customer:{self.customer.user_profile.get_fullname()} - product:{self.product.title}')
+        
