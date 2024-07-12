@@ -1,6 +1,17 @@
 from rest_framework import serializers
 
+from accounts.models import CustomUser
+
 from .models import CategoryModel, CommentModel, ProductModel
+
+class ShopUserSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CustomUser
+        fields = ['id','full_name']
+    def get_full_name(self,user):
+        return user.user_profile.get_fullname()
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,10 +26,11 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
+    customer = ShopUserSerializer(read_only=True)
     status = serializers.SerializerMethodField()
     class Meta:
         model = CommentModel
-        fields = ['id', 'title','body','status',]
+        fields = ['id','customer', 'title','body','status',]
 
     def create(self, validated_data):
         product_id = self.context['product_pk']

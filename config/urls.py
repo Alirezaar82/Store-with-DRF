@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/',include('cart.urls')),
     path('shop/',include('shop.urls')),
+    path('shop/',include('order.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
     path('auth/',include('djoser.urls')),
     path('auth/',include('djoser.urls.jwt')),
