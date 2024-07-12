@@ -12,7 +12,6 @@ product_comment_router = NestedDefaultRouter(router,'products',lookup='product')
 product_comment_router.register('comments',CommentViewSet,basename='product_comment')
 
 URLS = router.urls + product_comment_router.urls
-
 urlpatterns = [
-    path('',include(URLS))
+    path('',include(URLS)),
 ]

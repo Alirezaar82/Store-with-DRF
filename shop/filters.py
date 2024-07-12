@@ -1,8 +1,7 @@
 from django_filters.rest_framework import FilterSet
 from rest_framework.filters import SearchFilter
 
-from shop.models import ProductModel
-
+from .models import ProductModel
 
 
 class ProductFilter(FilterSet):

@@ -19,6 +19,7 @@ class ProductStatusType(models.IntegerChoices):
     published = 1,_('published') 
     draft = 2,_('draft') 
 
+
 class ProductModel(models.Model):
     title = models.CharField(verbose_name=_('title'),max_length=255)
     slug = models.SlugField(verbose_name=_('slug'),max_length=255, blank=True,unique=True,allow_unicode=True)
@@ -43,13 +44,11 @@ class ProductModel(models.Model):
             "label":ProductStatusType(self.status).label,
         }
     
+
 class CommentStatusType(models.IntegerChoices):
     waiting = 1,_('Waiting')
     approved = 2,_('Approved')
     notapproved = 3,_('Not Approved')
-
-
-
 
 
 class CommentModel(models.Model):
@@ -72,6 +71,7 @@ class CommentModel(models.Model):
             "title":CommentStatusType(self.status).name,
             "label":CommentStatusType(self.status).label,
         }
+    
     
 class WishListModel(models.Model):
     customer = models.ForeignKey(USER,on_delete=models.CASCADE,verbose_name=_("wishlist_Customer"))
