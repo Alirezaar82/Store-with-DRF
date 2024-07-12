@@ -6,12 +6,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.filters import OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated
 
 from .models import CommentModel, CommentStatusType, ProductModel,ProductStatusType,CategoryModel 
 from .serializers import CommentSerializer, ProductSerializer , CategorySerializer
 from .filters import *
 from .pagination import CustomProductPagination
-from .permissions import IsAdminOrReadOnlyOrCreatePermission, IsAdminOrReadOnlyPermission
+from .permissions import CustomIsAuthenticated, IsAdminOrReadOnlyOrCreatePermission, IsAdminOrReadOnlyPermission
 
 class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
@@ -48,7 +49,7 @@ class CategoryViewSet(ModelViewSet):
 
 class CommentViewSet(ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAdminOrReadOnlyOrCreatePermission]
+    permission_classes = [IsAdminOrReadOnlyOrCreatePermission,CustomIsAuthenticated]
 
     def get_queryset(self):
         product_pk = self.kwargs['product_pk']
@@ -59,7 +60,10 @@ class CommentViewSet(ModelViewSet):
         return queryset
     
     def get_serializer_context(self):
+        user_pk = self.request.user.id
         context =  super().get_serializer_context()
         context['product_pk'] = self.kwargs['product_pk']
+        context['customer_pk'] = user_pk
+        
         return context
     

@@ -18,14 +18,15 @@ class CommentSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
     class Meta:
         model = CommentModel
-        # fields = ['customer','title','body','created_at']
-        fields = '__all__'
+        fields = ['id', 'title','body','status',]
 
     def create(self, validated_data):
         product_id = self.context['product_pk']
+        customer_id = self.context['customer_pk']
         
         new_comment =  CommentModel.objects.create(
             product_id = product_id,
+            customer_id = customer_id,
             **validated_data
         )
         self.instance = new_comment
