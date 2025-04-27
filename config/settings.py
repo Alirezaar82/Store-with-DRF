@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'store_drf',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': 'Alireza82617',
+        'PASSWORD': 'password',
     }
 }
 
